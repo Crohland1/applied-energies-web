@@ -257,17 +257,6 @@ body.report-home>header{display:none!important}
    <h3>5. Tonnage and totals</h3><p>Enter a pattern such as <strong>10 x 13</strong>, select the material, and enter drilled depths to calculate estimated tonnage. You can change the material weight for this report or enter tonnage manually.</p>
    <h3>6. Save, print, and share</h3><p>Tap <strong>Save document</strong> to store the report in this browser on this device. <strong>Generate PDF / Print</strong> opens your device's print options. <strong>Share Editable Report</strong> sends or downloads a JSON report file; the recipient uses <strong>Import Editable Report</strong> to open an editable copy.</p>
    <h3>7. Backups and offline access</h3><p>Use <strong>Export Backup</strong> regularly, and <strong>Restore Backup</strong> to import saved reports. Reports are <strong>not automatically synced</strong> between devices. An installed web app may work offline after its files are cached; first test it with the internet turned off.</p>
-   <h3>8. Install on iPhone (Home Screen icon)</h3>
-   <ol>
-    <li>Open <strong>Safari</strong> on your iPhone.</li>
-    <li>Visit <a href="https://appliedenergiesapp.com" target="_blank" rel="noopener noreferrer">appliedenergiesapp.com</a>.</li>
-    <li>Tap the <strong>Share</strong> icon (square with an upward arrow).</li>
-    <li>Scroll down and select <strong>Add to Home Screen</strong>. On newer iOS versions, look under additional actions if needed.</li>
-    <li>Name it <strong>Applied Energies</strong>.</li>
-    <li>Enable <strong>Open as Web App</strong> if available.</li>
-    <li>Tap <strong>Add</strong>. The Applied Energies icon should appear on the iPhone Home Screen.</li>
-   </ol>
-   <p><strong>iPhone tip:</strong> Open the app while connected to the internet first, then test offline operation before relying on it in the field. Reports are currently saved on each device, not automatically uploaded or shared.</p>
    <p><strong>Tip:</strong> Tap <strong>Help / Instructions</strong> in the top bar to reopen these instructions anytime.</p>
   </div>
   <div class="help-actions"><label><input id="helpDontShow" type="checkbox"> Don't show automatically again</label><button id="helpClose" type="button">Get Started</button></div>
@@ -690,7 +679,7 @@ for(const id of ['timeLogPlaceholder','vehiclePlaceholder','sitePlaceholder'])do
 document.getElementById('homeHelpBtn').addEventListener('click',()=>document.getElementById('helpBtn').click());
 showModule('home');
 
-// Welcome dialog: display on page open unless this browser has opted out.
+// Welcome dialog: display on Report Center landing page unless this browser has opted out.
 const helpOverlay=document.getElementById('helpOverlay');
 const helpPreferenceKey='appliedEnergiesHideWelcomeV1';
 function openHelp(){document.getElementById('helpDontShow').checked=localStorage.getItem(helpPreferenceKey)==='1';helpOverlay.hidden=false;document.getElementById('helpClose').focus();}
@@ -698,7 +687,8 @@ function closeHelp(){try{localStorage.setItem(helpPreferenceKey,document.getElem
 document.getElementById('helpBtn').addEventListener('click',openHelp);
 document.getElementById('helpClose').addEventListener('click',closeHelp);
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!helpOverlay.hidden)closeHelp();});
-try{if(localStorage.getItem(helpPreferenceKey)!=='1')openHelp();}catch(e){openHelp();}
+function showLandingWelcomeIfEnabled(){try{if(localStorage.getItem(helpPreferenceKey)!=='1')openHelp();}catch(e){openHelp();}}
+showLandingWelcomeIfEnabled();
 
 </script>
 </body>
