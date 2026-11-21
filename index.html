@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Applied Energies — Drilling & Shot Reports</title>
-<link rel="manifest" href="manifest.webmanifest?v=5">
+<link rel="manifest" href="manifest.webmanifest?v=7">
 <meta name="theme-color" content="#171717">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Applied Energies">
-<link rel="apple-touch-icon" href="applied-icon-192.png?v=5">
-<link rel="icon" type="image/png" sizes="192x192" href="applied-icon-192.png?v=5">
-<link rel="icon" type="image/png" sizes="512x512" href="applied-icon-512.png?v=5">
+<link rel="apple-touch-icon" href="applied-icon-192.png?v=6">
+<link rel="icon" type="image/png" sizes="192x192" href="applied-icon-192.png?v=6">
+<link rel="icon" type="image/png" sizes="512x512" href="applied-icon-512.png?v=6">
 <style>
 :root{font-family:Arial,Helvetica,sans-serif;color:#111;background:#f3f4f6}
 *{box-sizing:border-box}
@@ -126,14 +126,43 @@ input,select{width:100%;margin-top:4px;padding:8px;border:1px solid #aaa;border-
 .help-actions{border-top:1px solid #ddd;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .help-actions label{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:400}.help-actions input{width:auto;margin:0}
 @media print{.help-overlay{display:none!important}}
+
+/* Illustrated Report Center landing page */
+[hidden]{display:none!important}
+body.report-home{background:#fff}
+body.report-home>header{display:none!important}
+#landingPage{max-width:1200px;margin:0 auto;padding:8px 8px 28px}
+.report-center-art{position:relative;width:100%;aspect-ratio:3/2;overflow:hidden;border-radius:16px}
+.report-center-art img{display:block;width:100%;height:100%;object-fit:fill}
+.report-center-hit{position:absolute;display:block;background:transparent;border:0;border-radius:12px;cursor:pointer;padding:0;z-index:2}
+.report-center-hit:focus-visible{outline:4px solid #facc15;outline-offset:-4px;background:#ffffff24}
+.report-center-hit:hover{background:#ffffff18}
+#openDrillLog{left:2.5%;top:46%;width:46.8%;height:24%}
+#timeLogPlaceholder{left:50.5%;top:46%;width:46.8%;height:24%}
+#vehiclePlaceholder{left:2.5%;top:70%;width:46.8%;height:26%}
+#sitePlaceholder{left:50.5%;top:70%;width:46.8%;height:26%}
+#backToHome{white-space:nowrap}
+.landing-footer{text-align:center;margin:16px 0 0}
+@media(max-width:650px){#landingPage{padding:4px 3px 16px}.report-center-art{border-radius:7px}.landing-footer{margin:12px 0 0}}
+@media print{#landingPage{display:none!important}}
 </style>
 </head>
 <body>
 <header>
- <div class="brand"><img class="brand-logo" src="applied-icon-192.png?v=5" alt="Applied Energies logo" width="64" height="64"><div><h1>APPLIED ENERGIES</h1><small>Drilling &amp; Shot Report Manager</small></div></div>
- <div class="toolbar no-print"><button id="newBtn">+ New document</button><button class="secondary" id="pdfBtn">Generate PDF / Print</button><button class="secondary" id="helpBtn" type="button">Help / Instructions</button></div>
+ <div class="brand"><img class="brand-logo" src="applied-icon-192.png?v=6" alt="Applied Energies logo" width="64" height="64"><div><h1>APPLIED ENERGIES</h1><small>Drilling &amp; Shot Report Manager</small></div></div>
+ <div class="toolbar no-print"><button id="backToHome" class="secondary" type="button">← Home</button><button id="newBtn">+ New document</button><button class="secondary" id="pdfBtn">Generate PDF / Print</button><button class="secondary" id="helpBtn" type="button">Help / Instructions</button></div>
 </header>
-<main>
+<section id="landingPage" aria-label="Applied Energies Report Center">
+  <div class="report-center-art">
+    <img src="report-center-landing.png?v=7" alt="Applied Energies Report Center with red and yellow drilling rigs. Drill Log available now; Time Log, Vehicle Inspection Report and Site Condition Report coming soon." width="1536" height="1024">
+    <button type="button" id="openDrillLog" class="report-center-hit" aria-label="Open Drill Log" title="Open Drill Log"></button>
+    <button type="button" id="timeLogPlaceholder" class="report-center-hit" aria-label="Time Log — coming soon" title="Time Log — coming soon"></button>
+    <button type="button" id="vehiclePlaceholder" class="report-center-hit" aria-label="Vehicle Inspection Report — coming soon" title="Vehicle Inspection Report — coming soon"></button>
+    <button type="button" id="sitePlaceholder" class="report-center-hit" aria-label="Site Condition Report — coming soon" title="Site Condition Report — coming soon"></button>
+  </div>
+  <div class="landing-footer"><button class="secondary" type="button" id="homeHelpBtn">Help / Instructions</button></div>
+</section>
+<main id="drillLogPage" hidden>
  <section class="panel no-print" id="savedPanel">
   <div class="topline"><h2>Saved documents</h2><span class="hint">Saved on this device/browser</span></div>
   <div id="savedList" class="saved-list"></div>
@@ -642,6 +671,24 @@ $('#importEditableFile').addEventListener('change',e=>importEditableReport(e.tar
 if('serviceWorker' in navigator && location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
 
 buildGrid();updateMetrics();renderSaved();
+
+
+// Module navigation. Existing drill report data remains stored under its original keys.
+function showModule(name){
+ const home=name==='home';
+ document.body.classList.toggle('report-home',home);
+ document.getElementById('landingPage').hidden=!home;
+ document.getElementById('drillLogPage').hidden=home;
+ document.querySelector('header .toolbar').hidden=home;
+ document.getElementById('backToHome').hidden=home;
+ document.title=home?'Applied Energies — Report Center':'Applied Energies — Drill Log';
+ window.scrollTo(0,0);
+}
+document.getElementById('openDrillLog').addEventListener('click',()=>showModule('drill'));
+document.getElementById('backToHome').addEventListener('click',()=>showModule('home'));
+for(const id of ['timeLogPlaceholder','vehiclePlaceholder','sitePlaceholder'])document.getElementById(id).addEventListener('click',()=>alert('This report module is coming soon.'));
+document.getElementById('homeHelpBtn').addEventListener('click',()=>document.getElementById('helpBtn').click());
+showModule('home');
 
 // Welcome dialog: display on page open unless this browser has opted out.
 const helpOverlay=document.getElementById('helpOverlay');
