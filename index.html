@@ -262,6 +262,35 @@ body.report-home>header{display:none!important}
   <div class="help-actions"><label><input id="helpDontShow" type="checkbox"> Don't show automatically again</label><button id="helpClose" type="button">Get Started</button></div>
  </section>
 </div>
+<div id="iphoneOverlay" class="help-overlay no-print" hidden>
+ <section class="help-dialog" role="dialog" aria-modal="true" aria-labelledby="iphoneTitle">
+  <div class="help-heading"><h2 id="iphoneTitle">Install Applied Energies App</h2><p>Home Screen installation for iPhone and Android</p></div>
+  <div class="help-content" tabindex="0">
+   <h3>8. Install the App on Your Phone</h3>
+   <h4>iPhone — Safari</h4>
+   <ol>
+    <li>Open <strong>Safari</strong> on your iPhone.</li>
+    <li>Visit <a href="https://appliedenergiesapp.com" target="_blank" rel="noopener noreferrer">appliedenergiesapp.com</a>.</li>
+    <li>Tap the <strong>Share</strong> icon (square with an upward arrow).</li>
+    <li>Scroll down and select <strong>Add to Home Screen</strong>. On newer iOS versions, look under additional actions if needed.</li>
+    <li>Name it <strong>Applied Energies</strong>.</li>
+    <li>Enable <strong>Open as Web App</strong> if available.</li>
+    <li>Tap <strong>Add</strong>. The Applied Energies icon should appear on the iPhone Home Screen.</li>
+   </ol>
+   <h4>Android — Google Chrome</h4>
+   <ol>
+    <li>Open <strong>Google Chrome</strong> on your Android phone.</li>
+    <li>Visit <a href="https://appliedenergiesapp.com" target="_blank" rel="noopener noreferrer">appliedenergiesapp.com</a>.</li>
+    <li>Tap Chrome's <strong>three-dot menu (⋮)</strong>.</li>
+    <li>Choose <strong>Install app</strong> or <strong>Add to Home screen</strong> (the wording varies by phone and Chrome version).</li>
+    <li>Confirm <strong>Install</strong> or <strong>Add</strong>. Open Applied Energies from the new icon.</li>
+   </ol>
+   <p><strong>iPhone using Chrome:</strong> If Chrome shows a <strong>Share</strong> option with <strong>Add to Home Screen</strong>, you can use it. Otherwise, open the website in <strong>Safari</strong> and follow the iPhone steps above.</p>
+   <p><strong>Offline tip:</strong> Open the app while connected to the internet first, then test offline operation before relying on it in the field. Reports are currently saved on each device, not automatically uploaded or shared.</p>
+  </div>
+  <div class="help-actions"><label><input id="iphoneDontShow" type="checkbox"> Don't show automatically again</label><button id="iphoneClose" type="button">Continue to Report Center</button></div>
+ </section>
+</div>
 <div id="colorPalette" aria-label="Choose square color"></div>
 <script>
 const $=s=>document.querySelector(s);
@@ -673,22 +702,30 @@ function showModule(name){
  document.title=home?'Applied Energies — Report Center':'Applied Energies — Drill Log';
  window.scrollTo(0,0);
 }
-document.getElementById('openDrillLog').addEventListener('click',()=>showModule('drill'));
+document.getElementById('openDrillLog').addEventListener('click',()=>{showModule('drill');showDrillHelpIfEnabled();});
 document.getElementById('backToHome').addEventListener('click',()=>showModule('home'));
 for(const id of ['timeLogPlaceholder','vehiclePlaceholder','sitePlaceholder'])document.getElementById(id).addEventListener('click',()=>alert('This report module is coming soon.'));
-document.getElementById('homeHelpBtn').addEventListener('click',()=>document.getElementById('helpBtn').click());
+document.getElementById('homeHelpBtn').addEventListener('click',openIphoneHelp);
 showModule('home');
 
-// Welcome dialog: display on Report Center landing page unless this browser has opted out.
+// Separate help dialogs: iPhone installation on landing, drill instructions on Drill Log.
 const helpOverlay=document.getElementById('helpOverlay');
+const iphoneOverlay=document.getElementById('iphoneOverlay');
 const helpPreferenceKey='appliedEnergiesHideWelcomeV1';
-function openHelp(){document.getElementById('helpDontShow').checked=localStorage.getItem(helpPreferenceKey)==='1';helpOverlay.hidden=false;document.getElementById('helpClose').focus();}
-function closeHelp(){try{localStorage.setItem(helpPreferenceKey,document.getElementById('helpDontShow').checked?'1':'0')}catch(e){}helpOverlay.hidden=true;document.getElementById('helpBtn').focus();}
+const iphonePreferenceKey='appliedEnergiesHideIphoneWelcomeV1';
+function getPref(key){try{return localStorage.getItem(key)==='1'}catch(e){return false}}
+function setPref(key,checked){try{localStorage.setItem(key,checked?'1':'0')}catch(e){}}
+function openHelp(){document.getElementById('helpDontShow').checked=getPref(helpPreferenceKey);helpOverlay.hidden=false;document.getElementById('helpClose').focus();}
+function closeHelp(){setPref(helpPreferenceKey,document.getElementById('helpDontShow').checked);helpOverlay.hidden=true;document.getElementById('helpBtn').focus();}
+function openIphoneHelp(){document.getElementById('iphoneDontShow').checked=getPref(iphonePreferenceKey);iphoneOverlay.hidden=false;document.getElementById('iphoneClose').focus();}
+function closeIphoneHelp(){setPref(iphonePreferenceKey,document.getElementById('iphoneDontShow').checked);iphoneOverlay.hidden=true;document.getElementById('homeHelpBtn').focus();}
+function showDrillHelpIfEnabled(){if(!getPref(helpPreferenceKey))openHelp();}
+function showIphoneHelpIfEnabled(){if(!getPref(iphonePreferenceKey))openIphoneHelp();}
 document.getElementById('helpBtn').addEventListener('click',openHelp);
 document.getElementById('helpClose').addEventListener('click',closeHelp);
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!helpOverlay.hidden)closeHelp();});
-function showLandingWelcomeIfEnabled(){try{if(localStorage.getItem(helpPreferenceKey)!=='1')openHelp();}catch(e){openHelp();}}
-showLandingWelcomeIfEnabled();
+document.getElementById('iphoneClose').addEventListener('click',closeIphoneHelp);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!helpOverlay.hidden)closeHelp();else if(!iphoneOverlay.hidden)closeIphoneHelp();}});
+showIphoneHelpIfEnabled();
 
 </script>
 </body>
