@@ -1,6 +1,7 @@
 {
-  "name": "Applied Energies \u2014 Drilling & Shot Reports",
+  "name": "Applied Energies Drilling & Shot Report Manager",
   "short_name": "Applied Energies",
+  "description": "Drilling and shot report manager",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -8,14 +9,16 @@
   "theme_color": "#171717",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "applied-icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "applied-icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
