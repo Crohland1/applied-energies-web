@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Applied Energies — Drilling & Shot Reports</title>
+<title>Applied Energies — Drilling &amp; Shot Reports</title>
 <link rel="manifest" href="manifest.webmanifest?v=7">
 <meta name="theme-color" content="#171717">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -59,8 +59,6 @@ input,select{width:100%;margin-top:4px;padding:8px;border:1px solid #aaa;border-
 .hole:after{content:none}
 .hole:focus-within{outline:2px solid #2563eb;outline-offset:-2px;z-index:2}
 .hole{touch-action:pan-x pan-y}
-#colorPalette{position:fixed;z-index:10000;display:none;background:#fff;border:1px solid #555;border-radius:9px;padding:7px;box-shadow:0 4px 18px #0004;gap:6px;flex-wrap:wrap;max-width:190px}
-#colorPalette button{width:28px;height:28px;padding:0;border:2px solid #555;border-radius:6px}
 .comments{width:100%;min-height:90px;resize:vertical;border:1px solid #aaa;border-radius:5px;padding:9px;font:inherit}
 .hole .ob:focus,.hole .depth:focus{background:#eaf2ff;outline:0}
 .hole small{position:absolute;font-size:8px;color:#777;pointer-events:none;z-index:0}
@@ -77,7 +75,7 @@ input,select{width:100%;margin-top:4px;padding:8px;border:1px solid #aaa;border-
 #reportTitle{font-size:17px;font-weight:700}
 @media(max-width:850px){.grid2{grid-template-columns:1fr}.fields{grid-template-columns:1fr 1fr}main{padding:0 8px}.panel{padding:11px}}
 @media print{
- @page{size:landscape;margin:0.12in}
+ @page{size:portrait;margin:0.2in}
  html,body{width:100%;height:auto;background:#fff!important}
  body{-webkit-print-color-adjust:exact;print-color-adjust:exact}
  header,.no-print,#savedPanel,body>main{display:none!important}
@@ -89,20 +87,19 @@ input,select{width:100%;margin-top:4px;padding:8px;border:1px solid #aaa;border-
  #reportTitle{font-size:15px}
  .topline{margin:0 0 5px!important}
  .panel{border:1px solid #333;border-radius:0;box-shadow:none;padding:4px;margin:0 0 3px;break-inside:avoid;page-break-inside:avoid}
- #colorPalette{display:none!important}
  .fields input,.fields select{border:1px solid #555!important;border-radius:0!important;padding:2px!important;min-height:19px}
  .grid2>div{border:1px solid #555;padding:3px}
  .grid2{grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
  .fields{gap:3px}
- .hole-grid{min-width:0;width:100%;grid-template-columns:27px repeat(25,minmax(0,1fr));border-top:1px solid #111;border-left:1px solid #111}
- .corner,.colhead,.rowhead,.hole{min-height:0;height:29px;border-right:1px solid #222!important;border-bottom:1px solid #222!important}
- .colhead{height:20px;font-size:10px}
- .corner,.rowhead{font-size:10px}
+ .hole-grid{min-width:0;width:100%;grid-template-columns:20px repeat(25,minmax(0,1fr));border-top:1px solid #111;border-left:1px solid #111}
+ .corner,.colhead,.rowhead,.hole{min-height:0;height:25px;border-right:1px solid #222!important;border-bottom:1px solid #222!important}
+ .colhead{height:17px;font-size:8px}
+ .corner,.rowhead{font-size:8px}
  .hole{border:1px solid #222!important;background-color:var(--hole-color,#fff)!important;print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important}
  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
- .hole .ob{font-size:10px;line-height:1;font-weight:800;width:43%;height:48%;clip-path:none}
- .hole .extra{font-size:10px;width:43%;height:48%}
- .hole .depth{font-size:14pt;line-height:1;font-weight:800;width:96%;height:70%;clip-path:none}
+ .hole .ob{font-size:8px;line-height:1;font-weight:800;width:43%;height:48%;clip-path:none}
+ .hole .extra{font-size:8px;width:43%;height:48%}
+ .hole .depth{font-size:10pt;line-height:1;font-weight:800;width:96%;height:70%;clip-path:none}
  .hole small{display:none}
  .metrics{font-size:10px;gap:12px;margin-top:3px!important}
  h2{font-size:11px;margin:0 0 2px}
@@ -112,6 +109,13 @@ input,select{width:100%;margin-top:4px;padding:8px;border:1px solid #aaa;border-
  .comments{border:1px solid #555!important;min-height:28px;height:28px;resize:none;padding:3px;font-size:9px}
  .hint{font-size:8px}
  .grid-wrap{overflow:visible;padding:0}
+ .hole-notes-panel{break-inside:auto!important;page-break-inside:auto!important}
+ .hole-grid{width:98%!important}
+ .hole-notes-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:7pt;line-height:1.15}
+ .hole-notes-table th,.hole-notes-table td{border:1px solid #555;padding:2px 3px;vertical-align:top;white-space:pre-wrap;overflow-wrap:anywhere}
+ .hole-notes-table th{background:#eee}
+ .hole-notes-table .hole-col{width:10%}.hole-notes-table .status-col{width:18%}
+ .hole-notes-table tr{break-inside:avoid;page-break-inside:avoid}
  .status{display:none}
 }
 
@@ -171,6 +175,29 @@ body.report-home>header{display:none!important}
 #blastingPage .ae-blasting-module-list #blastingVehicle{border:0!important;background:transparent!important;box-shadow:none!important;border-radius:0!important}
 #blastingPage .ae-blasting-module-list #blastingVehicle .ae-module-banner{border:0!important}
 @media(max-width:480px){#blastingPage .ae-blasting-module-list{gap:12px;padding:10px}#blastingPage .ae-blasting-module-list .ae-module-card{border-width:3px!important;border-radius:16px!important}}
+</style>
+<style id="holeDetailsPreviewStyles">
+.hole-detail-btn{position:absolute;z-index:4;left:2px;bottom:2px;top:auto;transform:none;width:14px;height:14px;min-height:0;padding:0;border:1px solid #555;border-radius:50%;background:#fff;color:#222;font-size:8px;font-weight:900;line-height:11px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 1px #fff}
+.hole-detail-btn.has-details{background:#b3272d;border-color:#8e1e23;color:#fff}
+.hole-detail-btn.has-details.wet{background:#1976d2;border-color:#0d47a1;color:#fff}
+.hole-print-detail{position:absolute;z-index:4;left:1px;bottom:1px;top:auto;transform:none;width:10px;height:10px;border:1px solid #8e1e23;border-radius:50%;background:#b3272d;color:#fff;font:900 6px/8px Arial,sans-serif;text-align:center;display:flex;align-items:center;justify-content:center}
+.hole-print-detail.wet{background:#1976d2;border-color:#0d47a1}
+.hole-detail-btn:focus-visible{outline:2px solid #2563eb;outline-offset:2px}
+.notes-appendix-toggle{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700}
+.notes-appendix-toggle input{width:auto;margin:0}
+.hole-details-dialog{width:min(100%,560px)}
+.hole-details-dialog label{font-size:14px;margin-bottom:12px}
+.hole-details-dialog select,.hole-details-dialog textarea{display:block;width:100%;margin-top:6px;padding:11px;border:1px solid #aab3bb;border-radius:8px;font:inherit}
+.hole-details-dialog textarea{resize:vertical;min-height:120px;line-height:1.45}
+.hole-geology-label{margin-top:14px}
+.hole-details-dialog .help-actions{justify-content:flex-end}
+.hole-notes-table{width:100%;border-collapse:collapse;font:10pt Arial,sans-serif;margin-top:8px}
+.hole-notes-table th,.hole-notes-table td{border:1px solid #555;padding:6px;text-align:left;vertical-align:top;white-space:pre-wrap}
+.hole-notes-table th{background:#eee}
+.hole-notes-table .page-col{width:12%}.hole-notes-table .hole-col{width:12%}.hole-notes-table .status-col{width:22%}
+.hole-notes-table tr{break-inside:avoid;page-break-inside:avoid}
+.hole-notes-title{font:bold 12pt Arial,sans-serif;margin:0 0 3px}
+@media print{.hole-detail-btn{display:none!important}.hole-print-detail{display:flex!important;width:10px;height:10px;line-height:8px;font-size:6px}.hole-notes-table{font:7pt Arial,sans-serif;line-height:1.15}.hole-notes-table th,.hole-notes-table td{padding:2px 3px}}
 </style>
 <style id="aeDivisionStyles">
 #roleSelectionPage[hidden],#blastingPage[hidden],#timeLogPage[hidden],#landingPage[hidden]{display:none!important}
@@ -333,7 +360,7 @@ body.report-home>header{display:none!important}
     <select id="layoutSelect"><option value="straight">Straight columns</option><option value="offset">Offset columns (50%)</option></select>
    </label>
    <div class="page-controls"><label>Page <select id="pageSelect" style="width:auto;min-width:70px;margin-top:0"></select></label><button class="secondary" id="addPageBtn">+ Add Page</button><button class="danger" id="deletePageBtn" type="button">Delete Page</button></div>
-   <span class="shift-controls" style="display:inline-flex;gap:4px;align-items:center;flex-wrap:wrap"><strong>Shift:</strong><button class="secondary" type="button" data-shift="left">←</button><button class="secondary" type="button" data-shift="right">→</button><button class="secondary" type="button" data-shift="up">↑</button><button class="secondary" type="button" data-shift="down">↓</button></span><button class="secondary" id="completeBtn">Finalize report</button>
+   <span class="shift-controls" style="display:inline-flex;gap:4px;align-items:center;flex-wrap:wrap"><strong>Shift:</strong><button class="secondary" type="button" data-shift="left">←</button><button class="secondary" type="button" data-shift="right">→</button><button class="secondary" type="button" data-shift="up">↑</button><button class="secondary" type="button" data-shift="down">↓</button></span>   <button class="secondary" id="completeBtn">Finalize report</button>
    <button class="secondary" id="clearGridBtn">Clear current page</button>
   </div>
   <div class="toolbar no-print" id="thresholdControls" style="margin-bottom:10px;align-items:end">
@@ -341,7 +368,7 @@ body.report-home>header{display:none!important}
    <label>🟨 Yellow <input id="thresholdYellow" type="number" min="0" max="99" step="1" inputmode="numeric" placeholder="Off" style="width:80px"></label>
    <label>🟧 Orange <input id="thresholdOrange" type="number" min="0" max="99" step="1" inputmode="numeric" placeholder="Off" style="width:80px"></label>
    <label>🟥 Red <input id="thresholdRed" type="number" min="0" max="99" step="1" inputmode="numeric" placeholder="Off" style="width:80px"></label>
-   <span class="hint">Highest exceeded threshold wins. Manually colored squares are protected. Empty threshold = off.</span>
+   <span class="hint">Highest exceeded threshold wins. Empty threshold = off.</span>
   </div>
   <div class="grid-wrap"><div class="hole-grid" id="holeGrid"></div></div>
   <p class="hint no-print">Enter values in feet. Blank overburden cells stay blank. Finalizing never inserts zeroes into empty cells.</p>
@@ -369,16 +396,34 @@ body.report-home>header{display:none!important}
   <p class="hint">Reports are stored locally on this device. Use Share Editable Report to send a complete report to another employee, and Import Editable Report to save a separate editable copy. Export Backup regularly. PDF / Print uses your device’s print dialog.</p>
  </section>
 </main>
+<div id="holeDetailsOverlay" class="help-overlay no-print" hidden>
+ <section class="help-dialog hole-details-dialog" role="dialog" aria-modal="true" aria-labelledby="holeDetailsTitle">
+  <div class="help-heading"><h2 id="holeDetailsTitle">Hole details</h2><p>Status and geology notes stay attached to this hole.</p></div>
+  <div class="help-content">
+   <label>Status
+    <select id="holeStatusSelect">
+     <option value="">No status selected</option><option>Not drilled</option><option>In progress</option><option>Complete</option>
+     <option>Wet</option><option>Caved / collapsing</option><option>Blocked / refusal</option><option>Redrill required</option><option>Other</option>
+    </select>
+   </label>
+   <label class="hole-geology-label">Geology notes
+    <textarea id="holeGeologyNotes" rows="5" placeholder="Rock type, fractures, seams, water, voids, or other observations for this hole"></textarea>
+   </label>
+   <p class="hint">These entries are saved with the selected hole and do not change drilling totals. The center marker prints only when a status or geology note is saved: red for most entries, blue for Wet.</p>
+  </div>
+  <div class="help-actions"><button id="cancelHoleDetails" class="secondary" type="button">Cancel</button><button id="saveHoleDetails" type="button">Save hole details</button></div>
+ </section>
+</div>
 <div id="helpOverlay" class="help-overlay no-print" hidden>
  <section class="help-dialog" role="dialog" aria-modal="true" aria-labelledby="helpTitle" aria-describedby="helpSubtitle">
   <div class="help-heading"><h2 id="helpTitle">Welcome to Applied Energies</h2><p id="helpSubtitle">Drilling &amp; Shot Report Manager — Quick Instructions</p></div>
   <div class="help-content" tabindex="0">
    <h3>1. Start a report</h3><p>Tap <strong>+ New document</strong>, choose STRAIGHT or OFFSET columns, and fill in the customer, drilling, and shot information.</p>
-   <h3>2. Enter the drill pattern</h3><p>Each square represents a hole. Enter <strong>overburden</strong> (up to 2 digits) at the top left, an optional <strong>note</strong> at the top right, and <strong>drilled depth</strong> at the bottom right. Notes do not affect calculations. Swipe sideways to see more columns.</p>
-   <h3>3. Color-code holes</h3><p>Press and hold a square to choose a manual color. You can also set yellow, orange, and red overburden thresholds to color holes automatically when their values are greater than the entered threshold. Manual colors take priority.</p>
+   <h3>2. Enter the drill pattern</h3><p>Each square represents a hole. Enter <strong>overburden</strong> (up to 2 digits) at the top left, an optional <strong>note</strong> at the top right, and <strong>drilled depth</strong> at the bottom right. Tap the small center circle to add that hole’s <strong>status and geology notes</strong>. The circle is red for saved entries and blue for Wet. A marker prints only when a status or geology note is saved. These do not affect calculations. Swipe sideways to see more columns.</p>
+   <h3>3. Overburden colors</h3><p>Set yellow, orange, and red overburden thresholds to color holes automatically when their values exceed the entered threshold. Uncolored holes stay white.</p>
    <h3>4. Pages and corrections</h3><p>Use <strong>+ Add Page</strong> to continue a report. Totals include all pages. Use the arrow buttons to shift the current page's hole entries, or <strong>Delete Page</strong> to remove an extra page. <strong>Finalize report</strong> updates report totals without filling blank holes.</p>
    <h3>5. Tonnage and totals</h3><p>Enter a pattern such as <strong>10 x 13</strong>, select the material, and enter drilled depths to calculate estimated tonnage. You can change the material weight for this report or enter tonnage manually.</p>
-   <h3>6. Save, print, and share</h3><p>Tap <strong>Save document</strong> to store the report in this browser on this device. <strong>Generate PDF / Print</strong> opens your device's print options. <strong>Share Editable Report</strong> sends or downloads a JSON report file; the recipient uses <strong>Import Editable Report</strong> to open an editable copy.</p>
+   <h3>6. Save, print, and share</h3><p>Tap <strong>Save document</strong> to store the report in this browser on this device. <strong>Generate PDF / Print</strong> opens your device's print options; when selected, each hole’s status and geology notes print directly below that page’s drill pattern and comments. <strong>Share Editable Report</strong> sends or downloads a JSON report file; the recipient uses <strong>Import Editable Report</strong> to open an editable copy.</p>
    <h3>7. Backups and offline access</h3><p>Use <strong>Export Backup</strong> regularly, and <strong>Restore Backup</strong> to import saved reports. Reports are <strong>not automatically synced</strong> between devices. An installed web app may work offline after its files are cached; first test it with the internet turned off.</p>
    <p><strong>Tip:</strong> Tap <strong>Help / Instructions</strong> in the top bar to reopen these instructions anytime.</p>
   </div>
@@ -414,7 +459,6 @@ body.report-home>header{display:none!important}
   <div class="help-actions"><label><input id="iphoneDontShow" type="checkbox"> Don't show automatically again</label><button id="iphoneClose" type="button">Continue to App</button></div>
  </section>
 </div>
-<div id="colorPalette" aria-label="Choose square color"></div>
 <script>
 const $=s=>document.querySelector(s);
 const fields=[...document.querySelectorAll('[data-field]')];
@@ -443,7 +487,6 @@ const setStore=o=>localStorage.setItem(key,JSON.stringify(o));
 const cellKey=(r,c)=>r+'-'+c;
 const thresholdColors=[['yellow','#fde047'],['orange','#fb923c'],['red','#f87171']];
 function effectiveColor(h){
- if(h.color)return h.color; // Manual colors always take precedence.
  if(h.ob===undefined||h.ob===null||String(h.ob).trim()==='')return '#fff';
  const ob=Number(h.ob);if(!Number.isFinite(ob))return '#fff';
  const matched=thresholdColors.map(([name,color])=>({value:report.thresholds?.[name],color})).filter(t=>t.value!==undefined&&t.value!==''&&Number.isFinite(Number(t.value))&&ob>Number(t.value));
@@ -465,8 +508,7 @@ function buildGrid(){
   let rh=document.createElement('div');rh.className='rowhead';rh.textContent=r;grid.append(rh);
   for(let c=1;c<=25;c++){
    let wrap=document.createElement('div');wrap.className='hole';wrap.dataset.cell=cellKey(r,c);
-   if(report.layout==='offset' && ri%2===1) wrap.style.marginLeft='50%';
-   if(report.layout==='offset' && ri%2===1) wrap.style.width='100%';
+   if(report.layout==='offset' && ri%2===1) wrap.style.transform='translateX(50%)';
    let ob=document.createElement('input');ob.className='ob';ob.type='text';ob.inputMode='numeric';ob.maxLength=2;ob.pattern='[0-9]{0,2}';ob.setAttribute('aria-label',`Row ${r} column ${c} overburden`);
    let extra=document.createElement('input');extra.className='extra';extra.type='text';extra.setAttribute('aria-label',`Row ${r} column ${c} additional note`);
    let dep=document.createElement('input');dep.className='depth';dep.type='number';dep.min='0';dep.step='0.1';dep.inputMode='decimal';dep.setAttribute('aria-label',`Row ${r} column ${c} depth drilled`);
@@ -476,12 +518,12 @@ function buildGrid(){
    ob.addEventListener('input',()=>{ob.value=ob.value.replace(/\D/g,'').slice(0,2);setHole(r,c,'ob',ob.value,pageIndex);applyHoleColor(wrap,report.pages[pageIndex].holes[cellKey(r,c)]||{});updateMetrics()});
    extra.addEventListener('input',()=>{setHole(r,c,'extra',extra.value,pageIndex)});
    dep.addEventListener('input',()=>{setHole(r,c,'depth',dep.value,pageIndex);updateMetrics()});
-   wrap.append(ob,extra,dep);grid.append(wrap);
-   let pressTimer=null,pressPoint=null;
-   const cancelPress=()=>{if(pressTimer){clearTimeout(pressTimer);pressTimer=null}};
-   wrap.addEventListener('pointerdown',e=>{pressPoint={x:e.clientX,y:e.clientY};pressTimer=setTimeout(()=>{showColorPalette(wrap,r,c,pressPoint,pageIndex);pressTimer=null},550)});
-   wrap.addEventListener('pointerup',cancelPress);wrap.addEventListener('pointerleave',cancelPress);wrap.addEventListener('pointercancel',cancelPress);
-   wrap.addEventListener('contextmenu',e=>{e.preventDefault();showColorPalette(wrap,r,c,{x:e.clientX,y:e.clientY},pageIndex)});
+    const detailBtn=document.createElement('button');detailBtn.type='button';detailBtn.className='hole-detail-btn';
+    const hasDetails=holeHasDetails(h);detailBtn.textContent=hasDetails?holeDetailMarker(h):'';detailBtn.title=holeDetailTitle(r,c,h);detailBtn.setAttribute('aria-label',detailBtn.title);
+    detailBtn.classList.toggle('has-details',hasDetails);detailBtn.classList.toggle('wet',String(h.status||'').toLowerCase()==='wet');
+    detailBtn.addEventListener('pointerdown',e=>e.stopPropagation());
+    detailBtn.addEventListener('click',e=>{e.stopPropagation();openHoleDetails(r,c,pageIndex)});
+    wrap.append(ob,extra,dep,detailBtn);grid.append(wrap);
   }
  });
  updatePageSelector();
@@ -493,15 +535,35 @@ function updatePageSelector(){
  select.innerHTML='';(report.pages||[]).forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`${i+1}`;select.append(o)});
  select.value=String(pageIndex);select.disabled=(report.pages||[]).length<2;$('#deletePageBtn').disabled=pageIndex===0;
 }
-const paletteColors=[['Blue','#60a5fa'],['Orange','#fb923c'],['Yellow','#fde047'],['Pink','#f9a8d4'],['Green','#86efac'],['Red','#f87171']];
-function showColorPalette(wrap,r,c,point,whichPage=pageIndex){
- const palette=$('#colorPalette');palette.innerHTML='';
- paletteColors.forEach(([name,color])=>{const b=document.createElement('button');b.type='button';b.title=name;b.setAttribute('aria-label',name);b.style.background=color;b.addEventListener('click',()=>{const id=cellKey(r,c);report.pages[whichPage].holes[id] ||= {};report.pages[whichPage].holes[id].color=color;wrap.style.setProperty('--hole-color',color);wrap.style.backgroundColor=color;markDirty();palette.style.display='none'});palette.append(b)});
- const clear=document.createElement('button');clear.type='button';clear.textContent='×';clear.title='Clear color';clear.style.background='#fff';clear.addEventListener('click',()=>{const id=cellKey(r,c);const holes=report.pages[whichPage].holes;if(holes[id]){delete holes[id].color;if(!Object.keys(holes[id]).length)delete holes[id]}applyHoleColor(wrap,holes[id]||{});markDirty();palette.style.display='none'});palette.append(clear);
- palette.style.display='flex';const x=Math.min(point.x,window.innerWidth-205),y=Math.min(point.y,window.innerHeight-60);palette.style.left=Math.max(4,x)+'px';palette.style.top=Math.max(4,y)+'px';
-}
-document.addEventListener('pointerdown',e=>{if(!e.target.closest('#colorPalette'))$('#colorPalette').style.display='none'});
 function setHole(r,c,k,v,whichPage=pageIndex){let id=cellKey(r,c);const holes=report.pages[whichPage].holes;holes[id] ||= {};if(v==='')delete holes[id][k];else holes[id][k]=v;if(!Object.keys(holes[id]).length)delete holes[id];markDirty()}
+ function holeCoord(r,c){return `${r}-${String(c).padStart(2,'0')}`}
+ function holeHasDetails(h){return Boolean((h.status||'').trim()||(h.geologyNotes||'').trim())}
+ function holeDetailMarker(h){const map={'Complete':'✓','In progress':'D','Not drilled':'—','Wet':'W','Caved / collapsing':'C','Blocked / refusal':'B','Redrill required':'R','Other':'O'};return map[h.status]||(h.geologyNotes?'N':'')}
+ function holeDetailTitle(r,c,h){const bits=[h.status,h.geologyNotes?'geology note saved':''].filter(Boolean);return `Status and geology notes for hole ${holeCoord(r,c)}${bits.length?` — ${bits.join('; ')}`:''}`}
+ let activeHoleDetails=null;
+ function openHoleDetails(r,c,whichPage=pageIndex){
+  activeHoleDetails={page:whichPage,id:cellKey(r,c),row:r,column:c};
+  const hole=report.pages[whichPage]?.holes?.[cellKey(r,c)]||{};
+  $('#holeDetailsTitle').textContent=`Hole ${holeCoord(r,c)} · Status and geology notes`;
+  $('#holeStatusSelect').value=hole.status||'';$('#holeGeologyNotes').value=hole.geologyNotes||'';
+  $('#holeDetailsOverlay').hidden=false;$('#holeStatusSelect').focus();
+ }
+ function closeHoleDetails(saveChanges=false){
+  if(!activeHoleDetails)return;
+  if(saveChanges){
+   const {page,id}=activeHoleDetails;const holes=report.pages[page].holes;holes[id] ||= {};
+   const status=$('#holeStatusSelect').value.trim(),notes=$('#holeGeologyNotes').value.trim();
+   if(status)holes[id].status=status;else delete holes[id].status;
+   if(notes)holes[id].geologyNotes=notes;else delete holes[id].geologyNotes;
+   if(!Object.keys(holes[id]).length)delete holes[id];markDirty();
+   if(page===pageIndex)buildGrid();
+  }
+  activeHoleDetails=null;$('#holeDetailsOverlay').hidden=true;
+ }
+ $('#saveHoleDetails').addEventListener('click',()=>closeHoleDetails(true));
+ $('#cancelHoleDetails').addEventListener('click',()=>closeHoleDetails(false));
+ $('#holeDetailsOverlay').addEventListener('click',e=>{if(e.target.id==='holeDetailsOverlay')closeHoleDetails(false)});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#holeDetailsOverlay').hidden)closeHoleDetails(false)});
 function loadPageComments(){
  const box=$('[data-field="comments"]');
  box.value=report.pages[pageIndex]?.comments??'';
@@ -628,16 +690,28 @@ function renderPrintPages(){
   pattern.append(metrics);
   main.append(heading,info,pageNo,pattern);
   if((page.comments||'').trim()) {const c=document.createElement('section');c.className='panel';const h=document.createElement('h2');h.textContent='COMMENTS';const t=document.createElement('div');t.style.cssText='white-space:pre-wrap;border:1px solid #555;padding:5px;min-height:28px;font-size:9px';t.textContent=page.comments;c.append(h,t);main.append(c)}
+  const pageHoleNotes=Object.entries(page.holes||{}).filter(([,h])=>holeHasDetails(h)).sort(([a],[b])=>{const [ar,ac]=a.split('-'),[br,bc]=b.split('-');return rows.indexOf(ar)-rows.indexOf(br)||Number(ac)-Number(bc)});
+  if(pageHoleNotes.length){
+   const notesPanel=document.createElement('section');notesPanel.className='panel hole-notes-panel';
+   const notesTitle=document.createElement('h2');notesTitle.textContent='HOLE STATUS & GEOLOGY NOTES';
+   const table=document.createElement('table');table.className='hole-notes-table';
+   const colgroup=document.createElement('colgroup');colgroup.innerHTML='<col class="hole-col"><col class="status-col"><col>';table.append(colgroup);
+   const thead=document.createElement('thead'),headRow=document.createElement('tr');
+   ['Hole','Status','Geology notes'].forEach(label=>{const th=document.createElement('th');th.textContent=label;headRow.append(th)});thead.append(headRow);table.append(thead);
+   const tbody=document.createElement('tbody');
+   pageHoleNotes.forEach(([id,h])=>{const [row,col]=id.split('-');const tr=document.createElement('tr');[holeCoord(row,col),(h.status||'').trim()||'—',(h.geologyNotes||'').trim()||'—'].forEach(value=>{const td=document.createElement('td');td.textContent=value;tr.append(td)});tbody.append(tr)});
+   table.append(tbody);notesPanel.append(notesTitle,table);main.append(notesPanel);
+  }
   pageEl.append(main);target.append(pageEl);
  });
- document.body.append(target);return target;
-}
+  document.body.append(target);return target;
+ }
 function renderGridInto(grid,holes){
  const corner=document.createElement('div');corner.className='corner';grid.append(corner);
  for(let c=1;c<=25;c++){const d=document.createElement('div');d.className='colhead';d.textContent=c;grid.append(d)}
  rows.forEach((r,ri)=>{const rh=document.createElement('div');rh.className='rowhead';rh.textContent=r;grid.append(rh);
-  for(let c=1;c<=25;c++){const wrap=document.createElement('div');wrap.className='hole';if(report.layout==='offset'&&ri%2===1){wrap.style.marginLeft='50%';wrap.style.width='100%'}const h=holes[cellKey(r,c)]||{};applyHoleColor(wrap,h)
-   const ob=document.createElement('div');ob.className='ob';ob.textContent=h.ob??'';const extra=document.createElement('div');extra.className='extra';extra.textContent=h.extra??'';const dep=document.createElement('div');dep.className='depth';dep.textContent=h.depth??'';wrap.append(ob,extra,dep);grid.append(wrap)}
+  for(let c=1;c<=25;c++){const wrap=document.createElement('div');wrap.className='hole';if(report.layout==='offset'&&ri%2===1)wrap.style.transform='translateX(50%)';const h=holes[cellKey(r,c)]||{};applyHoleColor(wrap,h)
+   const ob=document.createElement('div');ob.className='ob';ob.textContent=h.ob??'';const extra=document.createElement('div');extra.className='extra';extra.textContent=h.extra??'';const dep=document.createElement('div');dep.className='depth';dep.textContent=h.depth??'';wrap.append(ob,extra,dep);if(holeHasDetails(h)){const mark=document.createElement('div');mark.className='hole-print-detail'+(String(h.status||'').toLowerCase()==='wet'?' wet':'');mark.textContent=holeDetailMarker(h);mark.setAttribute('aria-label',`Hole status or geology note: ${h.status||'note saved'}`);wrap.append(mark)}grid.append(wrap)}
  });
 }
 function complete(){
