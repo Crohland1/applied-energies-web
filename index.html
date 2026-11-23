@@ -512,6 +512,10 @@ function syncPageComments(){
 function fieldData(){let o={};fields.forEach(f=>o[f.dataset.field]=f.value);return o}
 function fillFields(data){
  fields.forEach(f=>f.value=f.dataset.field==='comments'?'':(data?.[f.dataset.field]??''));
+ // Older saved reports predate the tonnage override flag. Preserve any saved
+ // tonnage as a manual value so reopening the report cannot silently replace it.
+ const manualTonnage=$('[data-field="tonnageManual"]');
+ if(manualTonnage && data && !Object.prototype.hasOwnProperty.call(data,'tonnageManual') && String(data.tonnage??'').trim()) manualTonnage.value='1';
  const known=['Granite','Silica Sand','Limestone','Basalt'];
  const savedType=data?.materialType||'';
  if(savedType && !known.includes(savedType) && savedType!=='Custom'){
@@ -564,6 +568,7 @@ function updateTonnage(){
 }
 function fmt(n){return Number(n.toFixed(1)).toString()}
 function newReport(){
+ if(dirty&&!confirm('Discard your unsaved changes and start a new document?'))return;
  let choice=prompt('Choose column layout: type STRAIGHT or OFFSET','STRAIGHT');if(choice===null)return;
  let layout=choice.trim().toLowerCase();if(!['straight','offset'].includes(layout)){alert('Please enter STRAIGHT or OFFSET.');return}
  currentId=null;pageIndex=0;report={layout,pages:[{holes:{},comments:''}],holes:{},completed:false};fillFields({});$('#layoutSelect').value=layout;$('#reportTitle').textContent='New Drilling & Shot Report';$('#saveStatus').textContent='Not saved';buildGrid();updateMetrics();dirty=false;
@@ -578,9 +583,10 @@ function renderSaved(){
  let store=getStore(),list=$('#savedList');list.innerHTML='';
  let arr=Object.values(store).sort((a,b)=>b.updated.localeCompare(a.updated));
  $('#emptySaved').classList.toggle('hidden',arr.length>0);
- arr.forEach(d=>{let item=document.createElement('div');item.className='saved-item';let s=document.createElement('span');s.textContent=label(d);let edit=document.createElement('button');edit.textContent='Open / Edit';edit.className='secondary';edit.onclick=()=>load(d.id);let del=document.createElement('button');del.textContent='×';del.className='danger';del.title='Delete saved report';del.onclick=()=>{if(confirm('Delete this saved report?')){let x=getStore();delete x[d.id];setStore(x);if(currentId===d.id)newReport();renderSaved()}};item.append(s,edit,del);list.append(item)});
+  arr.forEach(d=>{let item=document.createElement('div');item.className='saved-item';let s=document.createElement('span');s.textContent=label(d);let edit=document.createElement('button');edit.textContent='Open / Edit';edit.className='secondary';edit.onclick=()=>load(d.id);let del=document.createElement('button');del.textContent='×';del.className='danger';del.title='Delete saved report';del.onclick=()=>{if(confirm('Delete this saved report?')){let x=getStore();delete x[d.id];setStore(x);if(currentId===d.id){dirty=false;newReport()}renderSaved()}};item.append(s,edit,del);list.append(item)});
 }
 function load(id){
+ if(dirty&&!confirm('Discard your unsaved changes and open this saved report?'))return;
  let d=getStore()[id];if(!d)return;currentId=id;report=JSON.parse(JSON.stringify(d.report||{layout:'straight',holes:{}}));if(!Array.isArray(report.pages))report.pages=[{holes:report.holes||{}}];if(!report.pages.length)report.pages=[{holes:{}}];delete report.holes;pageIndex=0;if(report.pages.every(p=>p.comments===undefined)&&d.fields?.comments)report.pages[report.pages.length-1].comments=d.fields.comments;fillFields(d.fields);$('#layoutSelect').value=report.layout||'straight';$('#reportTitle').textContent=label(d);$('#saveStatus').textContent='Saved';buildGrid();updateMetrics();dirty=false;
 }
 function addPage(){
@@ -661,7 +667,7 @@ $('#newBtn').onclick=newReport;
 $('#saveBtn').onclick=()=>save(false);
 $('#saveAsBtn').onclick=()=>save(true);
 $('#pdfBtn').onclick=exportPDF;$('#pdfBtn2').onclick=exportPDF;
-$('#deleteBtn').onclick=()=>{if(!currentId){alert('This document has not been saved yet.');return}if(confirm('Delete this document?')){let s=getStore();delete s[currentId];setStore(s);currentId=null;newReport();renderSaved()}};
+$('#deleteBtn').onclick=()=>{if(!currentId){alert('This document has not been saved yet.');return}if(confirm('Delete this document?')){let s=getStore();delete s[currentId];setStore(s);currentId=null;dirty=false;newReport();renderSaved()}};
 $('#completeBtn').onclick=complete;
 $('#addPageBtn').onclick=addPage;
 $('#deletePageBtn').onclick=()=>{
